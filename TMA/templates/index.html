@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to TrekOS{% endblock %}
+
+{% block content %}
+
+<div style="text-align: center; padding: 90px 35px; background: #009688; color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <h1 style="font-size: 3.5rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">
+        Welcome to TrekOS
+    </h1>
+    
+    <p style="font-size: 1.2rem; max-width: 100%; width:auto; margin-bottom: 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); line-height: 1.6;text-align: center;">
+        Join TrekOS today to discover adventurous treks, connect with fellow explorers, and embark on unforgettable journeys. Whether you're a seasoned trekker or just starting out, TrekOS is your gateway to the great outdoors.
+    </p>
+
+    <div style="display: flex; gap: 15px;">
+        {% if current_user %}
+            {% if current_user.role == 'admin' %}
+                <a href="/admin/dashboard" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 30px; border-radius: 30px;">Go to Admin Panel</a>
+            {% elif current_user.role == 'staff' %}
+                <a href="/staff/dashboard" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 30px; border-radius: 30px;">Go to Staff Panel</a>
+            {% else %}
+                <a href="/user/dashboard" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 30px; border-radius: 30px;">My Dashboard</a>
+            {% endif %}
+        
+        {% else %}
+            <a href="/register" class="btn btn-primary" style="font-size: 1.1rem; padding: 12px 30px; background: #FFFFFF; border: none; border-radius: 30px; color: #0F4C3A; text-decoration: none; font-weight: bold;width: 400px;">
+                Start Trekking
+            </a>
+            <a href="/login" style="font-size: 1.1rem; padding: 12px 30px; background: rgba(255, 255, 255, 0.2); border: 2px solid white; border-radius: 30px; color: white; text-decoration: none; font-weight: bold; width: 400px;">
+                Log In
+            </a>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

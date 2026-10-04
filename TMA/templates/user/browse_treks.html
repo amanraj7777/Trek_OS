@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Browse Treks - TrekOS{% endblock %}
+
+{% block content %}
+<h2>Browse Available Expeditions</h2>
+
+<div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <form method="GET" action="/user/browse_treks" style="display: flex; gap: 10px; margin: 0;">
+        <input type="text" name="search" value="{{ search }}" placeholder="Search by name or location..." style="flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+        <select name="difficulty" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+            <option value="">All Difficulties</option>
+            <option value="Beginner" {% if difficulty == 'Beginner' %}selected{% endif %}>Beginner</option>
+            <option value="Moderate" {% if difficulty == 'Moderate' %}selected{% endif %}>Moderate</option>
+            <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="/user/browse_treks" class="btn" style="background: #eee; padding: 10px 15px; text-decoration: none; border-radius: 4px; color: #333;">Clear</a>
+    </form>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+    {% for trek in treks %}
+    <div style="background: white; border: 1px solid #eee; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        <div style="padding: 20px;">
+            <h3 style="margin-top: 0;">{{ trek.name }}</h3>
+            <p style="color: #7f8c8d; font-size: 0.9rem;">📍 {{ trek.location }}</p>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+            <p style="margin: 5px 0;"><strong>Difficulty:</strong> {{ trek.difficulty }}</p>
+            <p style="margin: 5px 0;"><strong>Dates:</strong> {{ trek.start_date.strftime('%b %d') }} - {{ trek.end_date.strftime('%b %d') }}</p>
+            <p style="margin: 5px 0;"><strong>Slots Left:</strong> {{ trek.available_slots }}</p>
+        </div>
+        <div style="background: #f8f9fa; padding: 15px; border-top: 1px solid #eee;">
+            {% if trek.available_slots > 0 %}
+                <form action="/book/{{ trek.id }}" method="POST" style="margin: 0;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%; background: #1abc9c; border: none;">Book Now</button>
+                </form>
+            {% else %}
+                <button disabled style="width: 100%; padding: 10px; background: #bdc3c7; color: white; border: none; border-radius: 4px;">Sold Out</button>
+            {% endif %}
+        </div>
+    </div>
+    {% else %}
+        <p style="grid-column: 1 / -1; text-align: center; color: #777;">No expeditions match your search.</p>
+    {% endfor %}
+</div>
+{% endblock %}

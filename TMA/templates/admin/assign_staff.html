@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Assign Staff - TrekOS{% endblock %}
+
+{% block content %}
+<div style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
+    <h2>Assign Guides to Treks</h2>
+    <p>Select an approved staff member to lead each trek.</p>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <tr style="background-color: #2c3e50; color: white; text-align: left;">
+        <th style="padding: 12px;">Trek Name</th>
+        <th style="padding: 12px;">Dates</th>
+        <th style="padding: 12px;">Current Status</th>
+        <th style="padding: 12px;">Assign Staff Member</th>
+    </tr>
+    
+    {% for trek in treks %}
+    <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 12px;">
+            <strong>{{ trek.name }}</strong><br>
+            <span style="color: #777; font-size: 0.9rem;">{{ trek.location }}</span>
+        </td>
+        <td style="padding: 12px; font-size: 0.9rem;">
+            {{ trek.start_date }} to {{ trek.end_date }}
+        </td>
+        <td style="padding: 12px;">
+            <span style="background: #eee; padding: 3px 8px; border-radius: 10px; font-size: 0.85rem;">{{ trek.status }}</span>
+        </td>
+        <td style="padding: 12px;">
+            
+            <form method="POST" action="/admin/assign_staff" style="display: flex; gap: 10px; align-items: center; margin: 0;">
+                
+                <input type="hidden" name="trek_id" value="{{ trek.id }}">
+                
+                <select name="staff_user_id" class="form-control" style="width: 200px; padding: 8px; margin: 0;">
+                    <option value="">-- Unassigned --</option>
+                    
+                    {% for staff in staff_list %}
+                        <option value="{{ staff.user_id }}" {% if trek.assigned_staff_id == staff.user_id %}selected{% endif %}>
+                            {{ staff.user.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                
+                <button type="submit" class="btn btn-primary" style="padding: 8px 15px; width: auto; font-size: 0.9rem;">Assign</button>
+            </form>
+
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="4" style="padding: 20px; text-align: center; color: #777;">No treks available.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

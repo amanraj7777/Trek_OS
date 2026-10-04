@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Staff Approvals - TrekOS{% endblock %}
+
+{% block content %}
+<div style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
+    <h2>Staff Applications & Profiles</h2>
+    <p>Review users who registered as Guides/Staff.</p>
+</div>
+
+<table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <tr style="background-color: #2c3e50; color: white; text-align: left;">
+        <th style="padding: 12px;">Name</th>
+        <th style="padding: 12px;">Contact</th>
+        <th style="padding: 12px;">Experience</th>
+        <th style="padding: 12px;">Status</th>
+        <th style="padding: 12px; text-align: right;">Actions</th>
+    </tr>
+    
+    {% for staff in staff_list %}
+    <tr style="border-bottom: 1px solid #ddd;">
+        <td style="padding: 12px;">
+            <strong>{{ staff.user.name }}</strong><br>
+            <small style="color: #777;">{{ staff.user.email }}</small>
+        </td>
+        <td style="padding: 12px;">{{ staff.contact_number }}</td>
+        <td style="padding: 12px; max-width: 250px;">{{ staff.experience }}</td>
+        <td style="padding: 12px;">
+            {% if staff.approved_status == 'pending' %}
+                <span style="color: #f39c12; font-weight: bold;">Pending</span>
+            {% elif staff.approved_status == 'approved' %}
+                <span style="color: #27ae60; font-weight: bold;">Approved</span>
+            {% else %}
+                <span style="color: #e74c3c; font-weight: bold;">Rejected</span>
+            {% endif %}
+        </td>
+        <td style="padding: 12px; text-align: right;">
+            {% if staff.approved_status != 'approved' %}
+                <a href="/admin/manage_staff/status/{{ staff.id }}/approved" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem; width: auto; margin-right: 5px;">Approve</a>
+            {% endif %}
+            
+            {% if staff.approved_status != 'rejected' %}
+                <a href="/admin/manage_staff/status/{{ staff.id }}/rejected" style="color: #e74c3c; text-decoration: none; font-weight: bold; margin-left: 10px;">Reject</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="5" style="padding: 20px; text-align: center; color: #777;">No staff profiles found.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

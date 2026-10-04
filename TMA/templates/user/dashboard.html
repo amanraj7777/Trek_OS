@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard - TrekOS{% endblock %}
+
+{% block content %}
+<div style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+    <h2>Welcome back, {{ current_user.name }}!</h2>
+    <div>
+        <a href="/user/browse_treks" class="btn btn-primary" style="background: #1abc9c; border: none;">Book New Trek</a>
+        <a href="/user/history" class="btn" style="background: #ecf0f1; color: #2c3e50; text-decoration: none; padding: 10px 15px; border-radius: 4px;">My History</a>
+    </div>
+</div>
+
+<h3 style="color: #2c3e50;">My Upcoming Trips</h3>
+{% if upcoming %}
+    <div style="display: grid; gap: 15px; margin-top: 20px;">
+        {% for booking in upcoming %}
+        <div style="background: white; border-left: 5px solid #3498db; padding: 20px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h4 style="margin: 0 0 5px 0; font-size: 1.2rem;">{{ booking.trek.name }}</h4>
+            <p style="margin: 0; color: #7f8c8d;">
+                <strong>Dates:</strong> {{ booking.trek.start_date.strftime('%b %d, %Y') }} &bull; 
+                <strong>Location:</strong> {{ booking.trek.location }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="background: #f8f9fa; padding: 30px; text-align: center; border-radius: 8px; border: 1px dashed #ccc; margin-top: 20px;">
+        <p style="color: #777; margin-bottom: 15px;">You don't have any upcoming trips.</p>
+        <a href="/user/browse_treks" class="btn btn-primary">Find an Adventure</a>
+    </div>
+{% endif %}
+{% endblock %}

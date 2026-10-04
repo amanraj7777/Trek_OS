@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - TrekOS{% endblock %}
+
+{% block content %}
+<h2>Admin Command Center</h2>
+<p>Welcome, {{ current_user.name }}. Here is a quick overview of your platform.</p>
+
+<div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; border-left: 5px solid #2c3e50;">
+    <h3 style="margin-top: 0; margin-bottom: 15px; color: #2c3e50;">Global Search</h3>
+    <p style="color: #777; font-size: 0.9rem; margin-bottom: 15px;">Search for Treks, Users, or Staff by name, email, or location.</p>
+    
+    <form action="/admin/search" method="GET" style="display: flex; width: 100%; margin: 0;">
+        <input type="text" name="q" placeholder="Search..." required
+               style="flex: 1; padding: 12px 15px; border: 1px solid #ccc; border-radius: 4px 0 0 4px; font-size: 1rem; outline: none;">
+        <button type="submit" style="padding: 12px 30px; background: #2c3e50; color: white; border: none; border-radius: 0 4px 4px 0; font-size: 1rem; cursor: pointer;">
+            Search
+        </button>
+    </form>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px;">
+    
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-top: 4px solid #3498db; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <h3>Total Treks</h3>
+            <p style="font-size: 2rem; font-weight: bold; margin: 10px 0;">{{ total_treks }}</p>
+        </div>
+        <div>
+            <a href="/admin/manage_treks" class="btn btn-primary" style="display: inline-block; width: auto; font-size: 0.9rem;">Manage Treks &rarr;</a>
+        </div>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-top: 4px solid #1abc9c; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <h3>Total Users</h3>
+            <p style="font-size: 2rem; font-weight: bold; margin: 10px 0;">{{ total_users }}</p>
+        </div>
+        <div>
+            <a href="/admin/manage_users" class="btn btn-primary" style="display: inline-block; width: auto; font-size: 0.9rem;">Manage Users &rarr;</a>
+        </div>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-top: 4px solid #9b59b6; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <h3>Staff Approvals</h3>
+            <p style="font-size: 1rem; color: #555; margin: 10px 0;">Review and approve new guide applications.</p>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="/admin/manage_staff" class="btn btn-primary" style="display: inline-block; width: auto; font-size: 0.9rem;">Manage Staff &rarr;</a>
+        </div>
+    </div>
+
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-top: 4px solid #f39c12; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+            <h3>Staff Assignments</h3>
+            <p style="font-size: 1rem; color: #555; margin: 10px 0;">Assign approved guides to active treks.</p>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="/admin/assign_staff" class="btn btn-primary" style="display: inline-block; width: auto; font-size: 0.9rem;">Assign Staff &rarr;</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

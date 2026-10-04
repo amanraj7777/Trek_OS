@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Login - TrekOS{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 0 auto; padding: 20px 0;">
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">Welcome Back</h2>
+    
+    <form method="POST" action="/login">
+        <div class="form-group">
+            <label style="font-weight: bold;">Email Address</label>
+            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group">
+            <label style="font-weight: bold;">Password</label>
+            <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Log In</button>
+    
+    </form>
+    
+    <div style="text-align: center; margin-top: 25px; border-top: 1px solid #eee; padding-top: 15px;">
+        <p style="color: #555;">
+            Don't have an account yet? <br>
+            <a href="/register" style="color: #1abc9c; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 5px;">Register here</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

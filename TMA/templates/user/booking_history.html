@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}My Booking History - TrekOS{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <h2>My Booking History</h2>
+    <a href="/user/dashboard" style="color: #3498db; text-decoration: none;">&larr; Back to Dashboard</a>
+</div>
+
+{% if bookings %}
+    <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <tr style="background-color: #f8f9fa; text-align: left;">
+            <th style="padding: 15px; border-bottom: 1px solid #ddd;">Booking ID</th>
+            <th style="padding: 15px; border-bottom: 1px solid #ddd;">Trek Name</th>
+            <th style="padding: 15px; border-bottom: 1px solid #ddd;">Booking Date</th>
+            <th style="padding: 15px; border-bottom: 1px solid #ddd;">Trek Status</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td style="padding: 15px; border-bottom: 1px solid #eee;">#{{ booking.id }}</td>
+            <td style="padding: 15px; border-bottom: 1px solid #eee;"><strong>{{ booking.trek.name }}</strong></td>
+            <td style="padding: 15px; border-bottom: 1px solid #eee;">{{ booking.booking_date.strftime('%Y-%m-%d') }}</td>
+            <td style="padding: 15px; border-bottom: 1px solid #eee;">
+                <span style="background: #eee; padding: 4px 8px; border-radius: 12px; font-size: 0.85rem;">{{ booking.trek.status }}</span>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <div style="background: #f8f9fa; padding: 30px; text-align: center; border-radius: 8px;">
+        <p style="color: #777;">You have not booked any treks yet.</p>
+    </div>
+{% endif %}
+{% endblock %}
