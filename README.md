@@ -36,11 +36,4 @@
 
 ---
 
-## 🚀 Local Installation & Setup
 
-Want to run TrekOS on your local machine? Follow these steps:
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/YOUR-USERNAME/TrekOS.git](https://github.com/YOUR-USERNAME/TrekOS.git)
-cd TrekOS
